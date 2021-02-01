@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <title>PixiJS</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.1.3/pixi.min.js"></script>
+  <style>
+
+  </style>
+</head>
+
+<body>
+  <script>
+    let app = new PIXI.Application(800, 600, { backgroundColor: 0xffffff });
+    document.body.appendChild(app.view);
+
+
+
+
+    let melon = PIXI.Sprite.from("suika.png");
+    let arrow = PIXI.Sprite.from("arrow.png");
+    let melon2 = PIXI.Sprite.from("suika_cut.png");
+
+    // melon.anchor.set(0.0);
+    melon.x = 0;
+    melon.y = 100;
+    // let melon_width = 80;
+    // let melon_height = 80;
+    melon.scale = new PIXI.Point(1, 1);
+    app.stage.addChild(melon);
+
+
+
+    app.ticker.add(function (delta) {
+      if (melon.x >= 0 && melon.x <= 700) {
+        melon.x += 10;
+      } else if (melon.x >= 700) {
+        melon.x = 0;
+      }
+    });
+
+    // arrow.anchor.set(0.0);
+    arrow.x = 350;
+    arrow.y = 500;
+    // let arrow_width = 50;
+    // let arrow_height = 70;
+    arrow.scale = new PIXI.Point(1, 1);
+    app.stage.addChild(arrow);
+
+    window.addEventListener('keydown', function (event) {
+      let _key = event.keyCode;
+      if (_key == 32) {
+        app.ticker.add(function (delta) {
+          if (arrow.y >= 0 && arrow.y <= 501) {
+            arrow.y -= 50;
+            let arrow_pos = arrow.position;
+            if (melon.containsPoint(arrow.position)) {
+                  alert('hit!')
+            }
+          } else if (arrow.y <= 40) {
+            arrow.y = 500;
+          };
+        });
+      };
+    });
+
+
+    //座標表示
+    window.addEventListener('click', function () {
+      console.log(arrow.y);
+    });
+
+    // let mouseposition = app.render.plugins.interaction.mouse.global;
+    // mouseposition.x //x
+    // mouseposition.y //y
+
+    // let _num = 1;
+    // if(_num = 1){
+    //   if(arrow.y < image.y){
+    //     console.log('hit')
+    //   };
+    // };
+
+    // function hitRectangle(r1, r2){
+    //   var hit, cmbWth, cmbHgh, vx, vy
+    //   hit = false
+
+
+    // r1.hlfW = r1.width / 2
+    // r1.hlfH = r1.height / 2
+    // r2.hlfW = r2.width / 2
+    // r2.hlhH = r2.height / 2
+
+    // r1.cX = r1.x + r1.hlfW;
+    // r1.cY = r1.y + r1.hlfH;
+    // r2.cX = r2.x + r2.hlfW;
+    // r2.cY = r2.x + r2.hlhH;
+
+    // vx = r1.cX - r2.cX
+    // vy = r1.cY - r2.cY
+    // cmbWth = r1.hlfW + r2.hlfW;
+    // cmbHgh = r1.hlfH + r2.hlfH;
+
+    // if (( Math.abs(vx) < cmbWth) && (Math.abs(vy) < cmbHgh)) { hit = true}
+
+    // return hit
+    // }
+
+
+    function collisionJudge() {
+      if ((melon.x + melon_width) >= arrow_width && melon.x <= (arrow.x + arrow_width)) {
+        if ((melon.y + melon_height) >= arrow.y && melon.y <= (arrow.y + arrow_height)) {
+          console.log('a')
+        }
+
+      }
+    }
+  </script>
+</body>
+
+</html>
